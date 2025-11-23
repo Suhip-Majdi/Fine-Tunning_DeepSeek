@@ -1,0 +1,2 @@
+# Fine-Tune_DeepSeek
+I worked on fine-tuning the DeepSeek-7B Chat model using LoRA (PEFT) to create a lightweight, efficient version of a large language model. This project focuses on real LLM training,I worked on fine-tuning the DeepSeek-7B Chat model using LoRA (PEFT) to create a lightweight, efficient version of a large language model. This project focuses on real LLM training, optimization, GPU usage, and scalable dataset handling. optimization, GPU usage, and scalable dataset handling.

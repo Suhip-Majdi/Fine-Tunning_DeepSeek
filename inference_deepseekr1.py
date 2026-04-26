@@ -7,19 +7,19 @@ from peft import PeftModel
 # -------------------------------
 
 base_model = "deepseek-ai/deepseek-llm-7b-chat"
-adapter_path = "./deepseek7bchat-lora-final"  # 👈 Your saved LoRA folder
+adapter_path = "./deepseek7bchat-lora-final"  #  Your saved LoRA folder
 
-print("🔧 Loading base model...")
+print(" Loading base model...")
 model = AutoModelForCausalLM.from_pretrained(
     base_model,
     device_map="auto",
     torch_dtype=torch.float16
 )
 
-print("🔗 Loading LoRA adapter...")
+print(" Loading LoRA adapter...")
 model = PeftModel.from_pretrained(model, adapter_path)
 
-print("🔤 Loading tokenizer...")
+print(" Loading tokenizer...")
 tokenizer = AutoTokenizer.from_pretrained(adapter_path)
 
 model.eval()
@@ -58,4 +58,4 @@ def chat(prompt: str, max_new_tokens=200):
 user_input = "Explain how transformers work in simple terms."
 response = chat(user_input)
 
-print("\n🧠 Assistant:", response)
+print("\n Assistant:", response)

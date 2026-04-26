@@ -9,7 +9,7 @@ from tqdm import tqdm
 # -------------------------------
 model_name = "deepseek-ai/deepseek-llm-7b-chat"
 
-print("✅ Loading model and tokenizer...")
+print(" Loading model and tokenizer...")
 config = AutoConfig.from_pretrained(model_name, trust_remote_code=True)
 
 if hasattr(config, "quantization_config"):
@@ -56,14 +56,14 @@ def format_chat_batch(batch):
 
 
 # Applies the formatter to the entire dataset with multiprocessing
-print("🔁 Tokenizing with progress...")
+print(" Tokenizing with progress...")
 tokenized_dataset = dataset.map(
     format_chat_batch,
     batched=True,
     batch_size=32,
     num_proc=4,
     remove_columns=dataset.column_names,
-    desc="🔄 Tokenizing "
+    desc=" Tokenizing "
 )
 
 # -------------------------------
@@ -73,7 +73,7 @@ tokenized_dataset = dataset.map(
 q_proj, v_proj in the attention blocks
 Reduces GPU memory + training time significantly'''
 
-print("✅ Applying LoRA configuration...")
+print(" Applying LoRA configuration...")
 lora_config = LoraConfig(
     r=16,
     lora_alpha=32,
@@ -116,7 +116,7 @@ trainer = Trainer(
 # 5. Start Fine-Tuning
 # -------------------------------
 
-print("🚀 Starting fine-tuning...")
+print(" Starting fine-tuning...")
 # trainer.train()  # fromscratch
 
 trainer.train(resume_from_checkpoint="./deepseek7bchat-lora-alpaca/checkpoint-4500")
@@ -126,12 +126,12 @@ trainer.train(resume_from_checkpoint="./deepseek7bchat-lora-alpaca/checkpoint-45
 # 6. Save Fine-Tuned Model
 # -------------------------------
 
-print("💾 Saving the fine-tuned LoRA adapter...")
+print(" Saving the fine-tuned LoRA adapter...")
 
-#Saves the LoRA adapter weights
+# Saves the LoRA adapter weights
 trainer.save_model("./deepseek7bchat-lora--final")
 
-#Saves the tokenizer files for future use
+# Saves the tokenizer files for future use
 tokenizer.save_pretrained("./deepseek7bchat-lora--final")
-print("✅ Training & saving complete!")
+print(" Training & saving complete!")
 
